@@ -11,6 +11,17 @@ services:
     ports:
       - 5432:5432
 
+  db_test_5:
+    container_name: db_test_5
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres_test
+      - POSTGRES_PASSWORD=postgres_test
+      - POSTGRES_DB=postgres_test
+    ports:
+      - 5433:5432
+
 networks:
   default:
     name: nginx_proxy
