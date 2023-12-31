@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.dals import UserDAL
-from db.session import async_session, get_db
+from db.session import get_db
 from api.models import ShowUser, UserCreate
 
 user_router = APIRouter()
@@ -19,9 +19,11 @@ async def _create_new_user(body: UserCreate, db: AsyncSession) -> ShowUser:
                 email=body.email,
             )
             return ShowUser(
+                user_id=user.user_id,
                 name=user.name,
                 surname=user.surname,
                 email=user.email,
+                is_active=user.is_active,
             )
 
 
