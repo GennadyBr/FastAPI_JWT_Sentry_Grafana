@@ -25,6 +25,7 @@ def event_loop():
 @pytest.fixture(scope="session", autouse=True)
 async def run_migrations():
     """Run migrations for test DB"""
+    print("Running migrations...")
     os.system("alembic init migrations")
     os.system('alembic revision --autogenerate -m "test running migrations"')
     os.system("alembic upgrade head")
@@ -32,7 +33,7 @@ async def run_migrations():
 
 @pytest.fixture(scope="session")
 async def async_session_test():
-    """Get test async session for test DB"""
+    """Get test async session for Test DB"""
     engine = create_async_engine(settings.TEST_DATABASE_URL, future=True, echo=True)
     async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
     yield async_session
@@ -65,6 +66,7 @@ async def client() -> Generator[TestClient, Any, None]:
 
     app.dependency_overrides[get_db]: Dict = _get_test_db
     with TestClient(app) as client:
+#        """Make new client with dependency_overrides of test DB"""
         yield client
 
 
