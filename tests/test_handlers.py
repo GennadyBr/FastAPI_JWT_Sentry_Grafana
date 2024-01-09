@@ -1,6 +1,12 @@
 import json
+import asyncio
+import asyncpg
+import asyncio
+import pytest
 
-
+# pytest_plugins = ('pytest_asyncio',)
+#
+# @pytest.mark.asyncio
 async def test_create_user(client, get_user_from_database):
     """Test creating user"""
     user_data = {
