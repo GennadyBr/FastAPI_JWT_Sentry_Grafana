@@ -26,8 +26,8 @@ def event_loop():
 async def run_migrations():
     """Run migrations for test DB"""
     print("Running migrations...")
-    os.system("alembic init migrations")
-    os.system('alembic revision --autogenerate -m "test running migrations"')
+    # os.system("alembic init migrations")
+    # os.system('alembic revision --autogenerate -m "test running migrations"')
     os.system("alembic upgrade head")
 
 
