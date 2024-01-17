@@ -11,12 +11,14 @@ RUN apt-get -y update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY . .
-WORKDIR .
-
 # pip & requirements
+COPY requirements.txt requirements.txt
 RUN python3 -m pip install --user --upgrade pip && \
     python3 -m pip install -r requirements.txt
+
+# copy app
+COPY . .
+WORKDIR .
 
 # Execute
 CMD ["python", "main.py"]

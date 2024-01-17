@@ -1,0 +1,49 @@
+version: "3.0"
+services:
+  app:
+    container_name: app
+    environment:
+      SENTRY_URL: "https://2d340f23a0454ea0a23a0d2d6fbe2e1f@o4504938483875840.ingest.sentry.io/4504939751538688"
+      APP_PORT: "8000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+  prometheus:
+    depends_on:
+      - app
+    image: prom/prometheus:v2.43.0
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:8.5.22
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - grafana-config:/etc/grafana
+    depends_on:
+      - prometheus
+    restart: always
+    user: "0"
+
+networks:
+  default:
+    name: nginx_proxy
+    driver: bridge
+    external: true
+
+volumes:
+  grafana-data:
+  grafana-config:
+  prometheus-data:
