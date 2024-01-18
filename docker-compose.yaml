@@ -1,9 +1,9 @@
 version: "3.0"
 services:
-  app:
-    container_name: app
+  app_2401:
+    container_name: app_2401
     environment:
-      SENTRY_URL: "https://2d340f23a0454ea0a23a0d2d6fbe2e1f@o4504938483875840.ingest.sentry.io/4504939751538688"
+      SENTRY_URL: "https://e94f707391cbbc8c1e27d0c3391c0564@o4505918059118592.ingest.sentry.io/4506592294797312"
       APP_PORT: "8000"
     build:
       context: .
@@ -11,30 +11,31 @@ services:
     ports:
       - "8000:8000"
 
-  prometheus:
-    depends_on:
-      - app
+  prometheus_2401:
     image: prom/prometheus:v2.43.0
-    container_name: prometheus
-    restart: unless-stopped
+    container_name: prometheus_2401
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
+    depends_on:
+      - app_2401
+    restart: unless-stopped
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - "9090:9090"
 
-  grafana:
+  grafana_2401:
     image: grafana/grafana:8.5.22
-    ports:
-      - "3000:3000"
+    container_name: grafana_2401
     volumes:
       - grafana-data:/var/lib/grafana
       - grafana-config:/etc/grafana
     depends_on:
-      - prometheus
+      - prometheus_2401
     restart: always
+    ports:
+      - "3000:3000"
     user: "0"
 
 networks:
