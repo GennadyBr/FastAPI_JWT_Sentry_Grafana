@@ -23,12 +23,10 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
-#########################
-# BLOCK WITH API ROUTES #
-#########################
-
 # create instance of the app
 app = FastAPI(title="FastAPI_auth_app")
+
+# Prometheus metrics
 app.add_middleware(PrometheusMiddleware)
 app.add_route("/metrics", handle_metrics)
 

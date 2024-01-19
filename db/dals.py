@@ -10,11 +10,6 @@ from db.models import PortalRole
 from db.models import User
 
 
-###########################################################
-# BLOCK FOR INTERACTION WITH DATABASE IN BUSINESS CONTEXT #
-###########################################################
-
-
 class UserDAL:
     """Data Access Layer for operating user info"""
 
@@ -22,12 +17,12 @@ class UserDAL:
         self.db_session = db_session
 
     async def create_user(
-        self,
-        name: str,
-        surname: str,
-        email: str,
-        hashed_password: str,
-        roles: list[PortalRole],
+            self,
+            name: str,
+            surname: str,
+            email: str,
+            hashed_password: str,
+            roles: list[PortalRole],
     ) -> User:
         """Data Access Layer for creating user and return User object"""
         new_user = User(

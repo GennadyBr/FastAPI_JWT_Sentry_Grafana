@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from random import randint
+
 # service_router = login_router = APIRouter()
 service_router = APIRouter()
 
@@ -13,7 +14,8 @@ async def ping():
         raise TypeError(f"{a=}")
     # return {"Success": True}
 
-#verify Sentry via triggers an error
+
+# verify Sentry via triggers an error
 @service_router.get("/sentry-debug")
 async def trigger_error():
     division_by_zero = 1 / 0

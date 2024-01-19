@@ -6,10 +6,6 @@ from sqlalchemy.orm import sessionmaker
 
 import settings
 
-##############################################
-# BLOCK FOR COMMON INTERACTION WITH DATABASE #
-##############################################
-
 # create async engine for interaction with database
 engine = create_async_engine(
     settings.REAL_DATABASE_URL,
