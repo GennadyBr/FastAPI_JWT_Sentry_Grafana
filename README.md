@@ -24,6 +24,21 @@ http://5.35.83.245:16686/search
 
 ## Запуск на локальной машине
 
+
+http://0.0.0.0:8000/docs
+
+
+http://0.0.0.0:8000/metrics
+
+
+http://0.0.0.0:9090/
+
+
+http://0.0.0.0:3000
+
+
+
+
 1. git clone git@github.com:GennadyBr/FastAPI_OAuth2_Redis_Jaeger_Postgres.git
 2. файл .env уже заполнен значениями;
 2. Выполнить команду `docker compose up -d --build`;
