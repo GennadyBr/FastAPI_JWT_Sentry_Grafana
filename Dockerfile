@@ -2,8 +2,9 @@ ARG BASE_IMAGE=python:3.9-slim-buster
 FROM $BASE_IMAGE
 
 # system update & package install
-RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get -y update \
+    && apt-get -y install curl \
+    && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
     postgresql-client \
