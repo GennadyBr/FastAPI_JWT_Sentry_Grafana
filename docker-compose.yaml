@@ -15,7 +15,7 @@ services:
     image: prom/prometheus:v2.43.0
     container_name: prometheus_2401
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
     depends_on:
       - app_2401
