@@ -1,6 +1,6 @@
 import pytest
 
-from db.models import PortalRole
+from src.db.models import PortalRole
 from tests.conftest import create_test_auth_headers_for_user
 from tests.test_handlers.test_data import user_data_for_promotion
 from tests.test_handlers.test_data import user_data_for_revoke

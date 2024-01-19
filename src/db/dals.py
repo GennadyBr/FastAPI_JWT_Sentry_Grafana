@@ -6,8 +6,8 @@ from sqlalchemy import select
 from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.models import PortalRole
-from db.models import User
+from src.db.models import PortalRole
+from src.db.models import User
 
 
 class UserDAL:
@@ -17,12 +17,12 @@ class UserDAL:
         self.db_session = db_session
 
     async def create_user(
-            self,
-            name: str,
-            surname: str,
-            email: str,
-            hashed_password: str,
-            roles: list[PortalRole],
+        self,
+        name: str,
+        surname: str,
+        email: str,
+        hashed_password: str,
+        roles: list[PortalRole],
     ) -> User:
         """Data Access Layer for creating user and return User object"""
         new_user = User(

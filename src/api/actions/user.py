@@ -3,12 +3,12 @@ from uuid import UUID
 
 from fastapi import HTTPException
 
-from api.schemas import ShowUser
-from api.schemas import UserCreate
-from db.dals import UserDAL
-from db.models import PortalRole
-from db.models import User
-from hashing import Hasher
+from src.api.schemas import ShowUser
+from src.api.schemas import UserCreate
+from src.db.dals import UserDAL
+from src.db.models import PortalRole
+from src.db.models import User
+from src.hashing import Hasher
 
 
 async def _create_new_user(body: UserCreate, session) -> ShowUser:

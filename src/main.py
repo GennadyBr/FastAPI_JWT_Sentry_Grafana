@@ -2,14 +2,15 @@ import sentry_sdk
 import uvicorn
 from fastapi import FastAPI
 from fastapi.routing import APIRouter
-from starlette_exporter import handle_metrics
-from starlette_exporter import PrometheusMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 
-import settings
-from api.handlers import user_router
-from api.login_handler import login_router
-from api.service import service_router
+from src import settings
+from src.api.handlers import user_router
+from src.api.login_handler import login_router
+from src.api.service import service_router
+
+# from starlette_exporter import handle_metrics
+# from starlette_exporter import PrometheusMiddleware
 
 # sentry configuration
 sentry_sdk.init(

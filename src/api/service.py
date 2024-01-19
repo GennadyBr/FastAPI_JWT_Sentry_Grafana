@@ -1,5 +1,6 @@
-from fastapi import APIRouter
 from random import randint
+
+from fastapi import APIRouter
 
 # service_router = login_router = APIRouter()
 service_router = APIRouter()

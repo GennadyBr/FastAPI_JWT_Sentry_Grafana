@@ -7,19 +7,19 @@ from fastapi import HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.actions.auth import get_current_user_from_token
-from api.actions.user import _create_new_user
-from api.actions.user import _delete_user
-from api.actions.user import _get_user_by_id
-from api.actions.user import _update_user
-from api.actions.user import check_user_permissions
-from api.schemas import DeleteUserResponse
-from api.schemas import ShowUser
-from api.schemas import UpdatedUserResponse
-from api.schemas import UpdateUserRequest
-from api.schemas import UserCreate
-from db.models import User
-from db.session import get_db
+from src.api.actions.auth import get_current_user_from_token
+from src.api.actions.user import _create_new_user
+from src.api.actions.user import _delete_user
+from src.api.actions.user import _get_user_by_id
+from src.api.actions.user import _update_user
+from src.api.actions.user import check_user_permissions
+from src.api.schemas import DeleteUserResponse
+from src.api.schemas import ShowUser
+from src.api.schemas import UpdatedUserResponse
+from src.api.schemas import UpdateUserRequest
+from src.api.schemas import UserCreate
+from src.db.models import User
+from src.db.session import get_db
 
 logger = getLogger(__name__)
 

@@ -1,3 +1,10 @@
+# installation
+# pip install pre-commit==2.21.0
+# pre-commit install
+
+# pre-commit check
+# pre-commit run --all-files
+
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
