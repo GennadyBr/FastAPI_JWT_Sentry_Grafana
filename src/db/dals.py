@@ -1,3 +1,4 @@
+from typing import List
 from typing import Union
 from uuid import UUID
 
@@ -56,6 +57,14 @@ class UserDAL:
         user_row = res.fetchone()
         if user_row is not None:
             return user_row[0]
+
+    async def get_all_user(self) -> Union[List[User], None]:
+        """Data Access Layer for getting user by id and return User.user_id or None"""
+        query = select(User)
+        res = await self.db_session.execute(query)
+        user_row = res.fetchall()
+        if user_row is not None:
+            return user_row
 
     async def get_user_by_email(self, email: str) -> Union[User, None]:
         """Data Access Layer for geting user by email, return User.user_id or None"""

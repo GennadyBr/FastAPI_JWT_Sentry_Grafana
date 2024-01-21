@@ -13,6 +13,7 @@ from prometheus_fastapi_instrumentator import Instrumentator
 
 import settings
 from api.user_routers import user_router
+from api.db_routers import db_router
 from api.login_routers import login_router
 from api.service_routers import service_router
 from api.admin_routers import admin_router
@@ -46,6 +47,7 @@ main_api_router = APIRouter()
 
 # set routes to the app instance
 main_api_router.include_router(user_router, prefix="/user", tags=["user"])
+main_api_router.include_router(db_router, prefix="/db", tags=["db"])
 main_api_router.include_router(admin_router, prefix="/admin", tags=["admin"])
 main_api_router.include_router(login_router, prefix="/login", tags=["login"])
 main_api_router.include_router(service_router, tags=["service"])
