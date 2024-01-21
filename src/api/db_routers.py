@@ -37,7 +37,7 @@ async def generate_fake_users(db: AsyncSession = Depends(get_db)) -> List[ShowUs
             name=fake.first_name(),
             surname=fake.last_name(),
             email=fake.email(),
-            password=123,
+            password="123",
         )
         res.append(await _create_new_user(user, db))
     return res
