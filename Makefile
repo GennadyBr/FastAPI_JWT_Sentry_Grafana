@@ -24,3 +24,6 @@ net:
 
 8000:
 	sudo lsof -i -P -n | grep 8000
+
+log:
+	docker logs app_2401
