@@ -104,7 +104,7 @@ async def test_delete_user_no_jwt(client, create_user_in_database):
     "user_role_list",
     [
         [PortalRole.ROLE_PORTAL_USER, PortalRole.ROLE_PORTAL_ADMIN],
-        # [PortalRole.ROLE_PORTAL_USER, PortalRole.ROLE_PORTAL_SUPERADMIN],
+        [PortalRole.ROLE_PORTAL_USER, PortalRole.ROLE_PORTAL_SUPERADMIN],
     ],
 )
 async def test_delete_user_by_privilege_roles(
@@ -228,7 +228,7 @@ async def test_reject_delete_superadmin(
         f"/user/?user_id={user_data_for_deletion['user_id']}",
         headers=create_test_auth_headers_for_user(user_data_for_deletion["email"]),
     )
-    assert resp.status_code == 406
+    assert resp.status_code == 403
     assert resp.json() == {"detail": "Superadmin cannot be deleted via API."}
     user_from_database = await get_user_from_database(user_data_for_deletion["user_id"])
     assert PortalRole.ROLE_PORTAL_SUPERADMIN in dict(user_from_database[0])["roles"]
