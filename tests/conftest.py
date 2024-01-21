@@ -1,3 +1,8 @@
+import os
+import sys
+
+sys.path.append(os.getcwd())
+
 import asyncio
 from datetime import timedelta
 from typing import Any
@@ -14,12 +19,8 @@ import src.settings as settings
 from src.db.models import PortalRole
 from src.db.session import get_db
 from src.main import app
-from src.security import create_access_token
+from src.service.security import create_access_token
 
-# import os
-# import sys
-
-# sys.path.append(os.path.dirname(os.getcwd()))
 
 CLEAN_TABLES = [
     "users",

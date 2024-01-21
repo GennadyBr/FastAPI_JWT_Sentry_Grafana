@@ -11,6 +11,7 @@ from tests.test_handlers.test_data import user_data_superadmin
 
 
 async def test_delete_user(client, create_user_in_database, get_user_from_database):
+    """Test deleting a user"""
     await create_user_in_database(**user_data)
     resp = client.delete(
         f"/user/?user_id={user_data['user_id']}",
@@ -28,6 +29,7 @@ async def test_delete_user(client, create_user_in_database, get_user_from_databa
 
 
 async def test_delete_user_not_found(client, create_user_in_database):
+    """Test error NOT found while deleting"""
     await create_user_in_database(**user_data_for_database)
     await create_user_in_database(**user_data_superadmin)
     user_id_not_exists_user = uuid4()
@@ -42,6 +44,7 @@ async def test_delete_user_not_found(client, create_user_in_database):
 
 
 async def test_delete_user_user_id_validation_error(client, create_user_in_database):
+    """Test type error when user_id is invalid"""
     await create_user_in_database(**user_data)
     resp = client.delete(
         "/user/?user_id=123",
@@ -61,6 +64,7 @@ async def test_delete_user_user_id_validation_error(client, create_user_in_datab
 
 
 async def test_delete_user_bad_cred(client, create_user_in_database):
+    """Test error of wrong email"""
     await create_user_in_database(**user_data)
     user_id = uuid4()
     resp = client.delete(
@@ -72,6 +76,7 @@ async def test_delete_user_bad_cred(client, create_user_in_database):
 
 
 async def test_delete_user_unauth(client, create_user_in_database):
+    """Test error of wrong Bearer token"""
     await create_user_in_database(**user_data)
     user_id = uuid4()
     bad_auth_headers = create_test_auth_headers_for_user(user_data["email"])
@@ -85,6 +90,7 @@ async def test_delete_user_unauth(client, create_user_in_database):
 
 
 async def test_delete_user_no_jwt(client, create_user_in_database):
+    """Test error of delete user with no JWT"""
     await create_user_in_database(**user_data)
     user_id = uuid4()
     resp = client.delete(
@@ -98,11 +104,13 @@ async def test_delete_user_no_jwt(client, create_user_in_database):
     "user_role_list",
     [
         [PortalRole.ROLE_PORTAL_USER, PortalRole.ROLE_PORTAL_ADMIN],
+        # [PortalRole.ROLE_PORTAL_USER, PortalRole.ROLE_PORTAL_SUPERADMIN],
     ],
 )
 async def test_delete_user_by_privilege_roles(
     client, create_user_in_database, get_user_from_database, user_role_list
 ):
+    """Test error of delete user with right privilege roles"""
     user_data_for_deletion["roles"] = [PortalRole.ROLE_PORTAL_USER]
     user_data_superadmin["roles"] = user_role_list
 
@@ -198,6 +206,7 @@ async def test_delete_another_user_error(
     user_for_deletion,
     user_who_delete,
 ):
+    """Test that an error occurs when trying to delete with wrong roles"""
     await create_user_in_database(**user_for_deletion)
     await create_user_in_database(**user_who_delete)
     resp = client.delete(
@@ -212,6 +221,7 @@ async def test_reject_delete_superadmin(
     create_user_in_database,
     get_user_from_database,
 ):
+    """Test that an error occurs when trying a SUPERADMIN"""
     user_data_for_deletion["roles"] = [PortalRole.ROLE_PORTAL_SUPERADMIN]
     await create_user_in_database(**user_data_for_deletion)
     resp = client.delete(
