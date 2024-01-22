@@ -7,6 +7,7 @@ from tests.test_handlers.test_data import user_data_same
 
 
 async def test_create_user(client, get_user_from_database):
+    """Test creating a new user"""
     resp = client.post("/user/", data=json.dumps(user_data_create))
     data_from_resp = resp.json()
     assert resp.status_code == 200
@@ -25,6 +26,7 @@ async def test_create_user(client, get_user_from_database):
 
 
 async def test_create_user_duplicate_email_error(client, get_user_from_database):
+    """Test creating two new users with same emails"""
     resp = client.post("/user/", data=json.dumps(user_data_create))
     data_from_resp = resp.json()
     assert resp.status_code == 200
@@ -112,6 +114,7 @@ async def test_create_user_duplicate_email_error(client, get_user_from_database)
 async def test_create_user_validation_error(
     client, user_data_for_creation, expected_status_code, expected_detail
 ):
+    """Test of error validation of user creation"""
     resp = client.post("/user/", data=json.dumps(user_data_for_creation))
     data_from_resp = resp.json()
     assert resp.status_code == expected_status_code

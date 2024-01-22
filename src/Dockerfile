@@ -1,9 +1,16 @@
-ARG BASE_IMAGE=python:3.9-slim-buster
-FROM $BASE_IMAGE
+#ARG BASE_IMAGE=python:3.9-slim-buster
+FROM python:3.11-buster
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR ./src
+
 
 # system update & package install
-RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get -y update \
+    && apt-get -y install curl \
+    && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
     postgresql-client \
@@ -17,8 +24,8 @@ RUN python3 -m pip install --user --upgrade pip && \
     python3 -m pip install -r requirements.txt
 
 # copy app
-COPY . .
-WORKDIR .
+#COPY . .
 
 # Execute
-CMD ["python", "main.py"]
+#CMD ["uvicorn", "main:app", "--reload", "--host 0.0.0.0", "--port 8000"]
+#CMD ["ls"]

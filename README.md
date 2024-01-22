@@ -24,24 +24,39 @@ http://5.35.83.245:16686/search
 
 ## Запуск на локальной машине
 
+
+http://0.0.0.0:8000/docs
+
+
+http://0.0.0.0:8000/metrics
+
+
+http://0.0.0.0:9090/
+
+
+http://0.0.0.0:3000
+
+
+
+
 1. git clone git@github.com:GennadyBr/FastAPI_OAuth2_Redis_Jaeger_Postgres.git
 2. файл .env уже заполнен значениями;
 2. Выполнить команду `docker compose up -d --build`;
 3. Подготовьте БД командой: `docker compose exec auth_app alembic upgrade head`;
 4. Создайте суперпользователя: `docker compose exec auth python create_superuser.py --name <admin name> --surname <admin surname> --login <admin login> --email <admin@example.com> --password <somepassword>`.
- 
+
 В результате будут запущены: база данных пользователей, база данных для истекших токенов, сервис авторизации и аутентификации.
 
 ## Документация к API
 
-После успешного запуска документация будет доступна по адресу: 
+После успешного запуска документация будет доступна по адресу:
 
 http://localhost/auth_api/openapi
 
 
 ## Jaeger UI
 
-После успешного запуска Jaeger UI будет доступен по адресу: 
+После успешного запуска Jaeger UI будет доступен по адресу:
 
 http://localhost:16686/search
 

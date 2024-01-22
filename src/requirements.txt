@@ -17,5 +17,6 @@ bcrypt==4.0.1
 greenlet==2.0.2
 sentry-sdk[fastapi]
 starlette-exporter==0.15.1
-
-starlette~=0.22.0
+Faker==22.4.0
+# starlette~=0.22.0
+prometheus-fastapi-instrumentator==6.1.0

@@ -8,11 +8,11 @@ from jose import JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-import settings
-from db.dals import UserDAL
-from db.models import User
-from db.session import get_db
-from hashing import Hasher
+from src import settings
+from src.db.dals import UserDAL
+from src.db.models import User
+from src.db.session import get_db
+from src.hashing import Hasher
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
 
