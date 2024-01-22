@@ -5,6 +5,7 @@ from tests.test_handlers.test_data import user_data
 
 
 async def test_get_user(client, create_user_in_database):
+    """Test getting a user"""
     await create_user_in_database(**user_data)
     resp = client.get(
         f"/user/?user_id={user_data['user_id']}",
@@ -20,9 +21,10 @@ async def test_get_user(client, create_user_in_database):
 
 
 async def test_get_user_id_validation_error(client, create_user_in_database):
+    """Test getting user with wrong user_id"""
     await create_user_in_database(**user_data)
     resp = client.get(
-        "/user/?user_id=123",
+        "/user/?user_id=wrong_id",
         headers=create_test_auth_headers_for_user(user_data["email"]),
     )
     assert resp.status_code == 422

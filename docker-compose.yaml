@@ -1,15 +1,16 @@
 version: "3.0"
 services:
   app_2401:
+    build: ./src
     container_name: app_2401
     environment:
       SENTRY_URL: "https://e94f707391cbbc8c1e27d0c3391c0564@o4505918059118592.ingest.sentry.io/4506592294797312"
       APP_PORT: "8000"
-    build:
-      context: .
-      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    volumes:
+      - ./src:/src
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
   prometheus_2401:
     image: prom/prometheus:v2.43.0

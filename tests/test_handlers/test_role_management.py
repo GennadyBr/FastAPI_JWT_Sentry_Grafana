@@ -1,6 +1,6 @@
 import pytest
 
-from db.models import PortalRole
+from src.db.models import PortalRole
 from tests.conftest import create_test_auth_headers_for_user
 from tests.test_handlers.test_data import user_data_for_promotion
 from tests.test_handlers.test_data import user_data_for_revoke
@@ -17,7 +17,7 @@ async def test_add_admin_role_to_user_by_superadmin(
     for user_data in [user_data_for_promotion, user_data_who_promoted]:
         await create_user_in_database(**user_data)
     resp = client.patch(
-        f"/user/admin_privilege?user_id={user_data_for_promotion['user_id']}",
+        f"/admin/?user_id={user_data_for_promotion['user_id']}",
         headers=create_test_auth_headers_for_user(user_data_who_promoted["email"]),
     )
     data_from_resp = resp.json()
@@ -43,7 +43,7 @@ async def test_revoke_admin_role_from_user_by_superadmin(
     for user_data in [user_data_for_revoke, user_data_who_revoke]:
         await create_user_in_database(**user_data)
     resp = client.delete(
-        f"/user/admin_privilege?user_id={user_data_for_revoke['user_id']}",
+        f"/admin/?user_id={user_data_for_revoke['user_id']}",
         headers=create_test_auth_headers_for_user(user_data_who_revoke["email"]),
     )
     data_from_resp = resp.json()
@@ -77,7 +77,7 @@ async def test_revoke_admin_role_from_user_by_wrong_type_of_user(
     for user_data in [user_data_for_revoke, user_data_who_revoke]:
         await create_user_in_database(**user_data)
     resp = client.delete(
-        f"/user/admin_privilege?user_id={user_data_for_revoke['user_id']}",
+        f"/admin/?user_id={user_data_for_revoke['user_id']}",
         headers=create_test_auth_headers_for_user(user_data_who_revoke["email"]),
     )
     data_from_resp = resp.json()

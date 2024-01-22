@@ -1,3 +1,4 @@
+from typing import List
 from typing import Union
 from uuid import UUID
 
@@ -6,8 +7,8 @@ from sqlalchemy import select
 from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.models import PortalRole
-from db.models import User
+from src.db.models import PortalRole
+from src.db.models import User
 
 
 class UserDAL:
@@ -17,12 +18,12 @@ class UserDAL:
         self.db_session = db_session
 
     async def create_user(
-            self,
-            name: str,
-            surname: str,
-            email: str,
-            hashed_password: str,
-            roles: list[PortalRole],
+        self,
+        name: str,
+        surname: str,
+        email: str,
+        hashed_password: str,
+        roles: list[PortalRole],
     ) -> User:
         """Data Access Layer for creating user and return User object"""
         new_user = User(
@@ -56,6 +57,14 @@ class UserDAL:
         user_row = res.fetchone()
         if user_row is not None:
             return user_row[0]
+
+    async def get_all_user(self) -> Union[List[User], None]:
+        """Data Access Layer for getting user by id and return User.user_id or None"""
+        query = select(User)
+        res = await self.db_session.execute(query)
+        user_row = res.fetchall()
+        if user_row is not None:
+            return user_row
 
     async def get_user_by_email(self, email: str) -> Union[User, None]:
         """Data Access Layer for geting user by email, return User.user_id or None"""

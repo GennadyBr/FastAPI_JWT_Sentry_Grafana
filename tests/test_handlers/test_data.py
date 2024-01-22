@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from db.models import PortalRole
+from src.db.models import PortalRole
 
 user_data_same = {
     "name": "Petr",
