@@ -12,11 +12,11 @@ from fastapi.routing import APIRouter
 from prometheus_fastapi_instrumentator import Instrumentator
 
 import settings
-from api.user_routers import user_router
-from api.db_routers import db_router
-from api.login_routers import login_router
-from api.service_routers import service_router
-from api.admin_routers import admin_router
+from api.v1.user_routers import user_router
+from api.v1.db_routers import db_router
+from api.v1.login_routers import login_router
+from api.v1.service_routers import service_router
+from api.v1.admin_routers import admin_router
 
 # sentry configuration
 sentry_sdk.init(
