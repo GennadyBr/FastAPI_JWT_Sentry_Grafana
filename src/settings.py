@@ -3,16 +3,15 @@ from envparse import Env
 
 env = Env()
 
-REAL_DATABASE_URL = env.str(
-    "REAL_DATABASE_URL",
-    default="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres",
-)  # connect string for the real database
-
-
 # REAL_DATABASE_URL = env.str(
 #     "REAL_DATABASE_URL",
-#     default="postgresql+asyncpg://postgres:postgres@db_pg_2401:5432/postgres",
+#     default="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres",
 # )  # connect string for the real database
+
+REAL_DATABASE_URL = env.str(
+    "REAL_DATABASE_URL",
+    default="postgresql+asyncpg://postgres:postgres@db_pg_2401:5432/postgres",
+)  # connect string for the real database
 
 APP_PORT = env.int("APP_PORT", default=8000)
 
