@@ -15,7 +15,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 from starlette.testclient import TestClient
 
-import src.settings as settings
+from src.settings import settings
 from src.db.models import PortalRole
 from src.db.session import get_db
 from src.main import app

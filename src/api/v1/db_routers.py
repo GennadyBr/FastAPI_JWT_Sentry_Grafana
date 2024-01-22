@@ -12,13 +12,14 @@ from src.db.session import get_db
 from src.service.db import _delete_all_users
 from src.service.db import _generate_fake_users
 from src.service.db import _get_all_users
+from src.settings import settings
 
 logger = getLogger(__name__)
 db_router = APIRouter()
 
 
 @db_router.get("/", response_model=List[ShowUser])
-@cache(expire=600)
+@cache(expire=settings.REDIS_EXPIRE_SEC)
 async def get_all_users(db: AsyncSession = Depends(get_db)) -> List[ShowUser]:
     """Get ALL users"""
     users = [raw[0] for raw in await _get_all_users(db)]
@@ -30,8 +31,7 @@ async def get_all_users(db: AsyncSession = Depends(get_db)) -> List[ShowUser]:
 @db_router.post("/", response_model=List[ShowUser])
 async def generate_fake_users(db: AsyncSession = Depends(get_db)) -> List[ShowUser]:
     """Generate fake users"""
-    QTY_FAKE_USERS = 10
-    res = await _generate_fake_users(QTY_FAKE_USERS, db)
+    res = await _generate_fake_users(settings.QTY_FAKE_USERS, db)
     return res
 
 

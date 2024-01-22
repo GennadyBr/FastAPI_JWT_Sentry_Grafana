@@ -4,7 +4,7 @@ from typing import Optional
 
 from jose import jwt
 
-from src import settings
+from src.settings import settings
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> jwt:

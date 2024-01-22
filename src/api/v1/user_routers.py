@@ -21,6 +21,7 @@ from src.service.user import _delete_user
 from src.service.user import _get_user_by_id
 from src.service.user import _update_user
 from src.service.user import check_user_permissions
+from src.settings import settings
 
 logger = getLogger(__name__)
 
@@ -28,7 +29,7 @@ user_router = APIRouter()
 
 
 @user_router.get("/", response_model=ShowUser)
-@cache(expire=600)
+@cache(expire=settings.REDIS_EXPIRE_SEC)
 async def get_user_by_id(
     user_id: UUID,
     db: AsyncSession = Depends(get_db),

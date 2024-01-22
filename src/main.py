@@ -15,7 +15,7 @@ from redis import asyncio as aioredis
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 
-import settings
+from settings import settings
 from api.v1.user_routers import user_router
 from api.v1.db_routers import db_router
 from api.v1.login_routers import login_router
