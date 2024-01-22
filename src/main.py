@@ -10,6 +10,10 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.routing import APIRouter
 from prometheus_fastapi_instrumentator import Instrumentator
+from redis import asyncio as aioredis
+
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
 
 import settings
 from api.v1.user_routers import user_router
@@ -52,6 +56,16 @@ main_api_router.include_router(admin_router, prefix="/admin", tags=["admin"])
 main_api_router.include_router(login_router, prefix="/login", tags=["login"])
 main_api_router.include_router(service_router, tags=["service"])
 app.include_router(main_api_router)
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize the redis cache"""
+    redis = aioredis.from_url(
+        url=settings.REDIS_URL, encoding="utf-8", decode_responses=True
+    )
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+
 
 if __name__ == "__main__":
     # run app on the host and port

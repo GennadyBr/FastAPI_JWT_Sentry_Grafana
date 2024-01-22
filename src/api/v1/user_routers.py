@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
+from fastapi_cache.decorator import cache
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -27,6 +28,7 @@ user_router = APIRouter()
 
 
 @user_router.get("/", response_model=ShowUser)
+@cache(expire=600)
 async def get_user_by_id(
     user_id: UUID,
     db: AsyncSession = Depends(get_db),

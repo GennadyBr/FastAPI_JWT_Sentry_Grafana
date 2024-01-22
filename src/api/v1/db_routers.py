@@ -4,6 +4,7 @@ from typing import List
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
+from fastapi_cache.decorator import cache
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.schemas import ShowUser
@@ -17,6 +18,7 @@ db_router = APIRouter()
 
 
 @db_router.get("/", response_model=List[ShowUser])
+@cache(expire=600)
 async def get_all_users(db: AsyncSession = Depends(get_db)) -> List[ShowUser]:
     """Get ALL users"""
     users = [raw[0] for raw in await _get_all_users(db)]

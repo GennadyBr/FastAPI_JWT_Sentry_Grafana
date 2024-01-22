@@ -34,3 +34,6 @@ TEST_DATABASE_URL = env.str(
 #     "TEST_DATABASE_URL",
 #     default="postgresql+asyncpg://postgres_test:postgres_test@test_db_pg_2401:5432/postgres_test",
 # )  # connect string for the test database
+
+# redis
+REDIS_URL: str = env.str("REDIS_URL", default="redis://redis_2401:6379")
