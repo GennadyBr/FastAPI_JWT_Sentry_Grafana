@@ -27,8 +27,8 @@ class Settings(BaseSettings):
     )
 
     # redis
-    # REDIS_URL: str = os.environ.get("REDIS_URL", default="redis://redis_2401:6379")
-    REDIS_URL: str = os.environ.get("REDIS_URL", default="redis://0.0.0.0:6379")
+    REDIS_URL: str = os.environ.get("REDIS_URL", default="redis://redis_2401:6379")
+    # REDIS_URL: str = os.environ.get("REDIS_URL", default="redis://0.0.0.0:6379")
     REDIS_EXPIRE_SEC = 600
 
     # celery for GOOGLE GMAIL
@@ -40,15 +40,15 @@ class Settings(BaseSettings):
     # router DB - Generate fake users
     QTY_FAKE_USERS = 10
 
-    REAL_DATABASE_URL = os.environ.get(
-        "REAL_DATABASE_URL",
-        default="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres",
-    )  # connect string for the real database
-
     # REAL_DATABASE_URL = os.environ.get(
     #     "REAL_DATABASE_URL",
-    #     default="postgresql+asyncpg://postgres:postgres@db_pg_2401:5432/postgres",
+    #     default="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres",
     # )  # connect string for the real database
+
+    REAL_DATABASE_URL = os.environ.get(
+        "REAL_DATABASE_URL",
+        default="postgresql+asyncpg://postgres:postgres@db_pg_2401:5432/postgres",
+    )  # connect string for the real database
 
     # test envs
     TEST_DATABASE_URL = os.environ.get(
