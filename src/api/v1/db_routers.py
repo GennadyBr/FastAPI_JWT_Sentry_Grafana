@@ -13,6 +13,7 @@ from src.service.db import _delete_all_users
 from src.service.db import _generate_fake_users
 from src.service.db import _get_all_users
 from src.settings import settings
+from src.tasks.tasks import send_email_report_dashboard
 
 logger = getLogger(__name__)
 db_router = APIRouter()
@@ -40,3 +41,15 @@ async def delete_all_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]
     """Delete ALL users"""
     res = await _delete_all_users(db)
     return {"message": f"{res} users deleted"}
+
+
+@db_router.get("/report", response_model=dict[str, str])
+async def report_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]:
+    """Sent report to GMAIL"""
+    users = [raw[0].__dict__ for raw in await _get_all_users(db)]
+    send_email_report_dashboard(value=users)
+    return {
+        "status": 200,
+        "data": f"{len(users)} users sent",
+        "details": "GMAIL report sent",
+    }

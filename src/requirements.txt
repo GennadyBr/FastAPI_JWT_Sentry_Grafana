@@ -25,3 +25,4 @@ celery==5.3.6
 flower==2.0.1
 redis==4.6.0
 async-timeout==4.0.3 #E   ModuleNotFoundError: No module named 'async_timeout'
+python-dotenv==1.0.0
