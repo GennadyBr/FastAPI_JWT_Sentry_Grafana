@@ -13,10 +13,12 @@ from src.service.db import _delete_all_users
 from src.service.db import _generate_fake_users
 from src.service.db import _get_all_users
 from src.settings import settings
-from src.tasks.tasks import send_email_report_dashboard
+from src.tasks.tasks import send_email
 
 logger = getLogger(__name__)
 db_router = APIRouter()
+
+# CELERY_IMPORTS = ['comm.tasks']
 
 
 @db_router.get("/", response_model=List[ShowUser])
@@ -46,8 +48,8 @@ async def delete_all_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]
 @db_router.get("/report", response_model=dict[str, str])
 async def report_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]:
     """Sent report to GMAIL"""
-    users = f"{[raw[0].__dict__ for raw in await _get_all_users(db)]}"
-    send_email_report_dashboard.delay(value=users)
+    users = [raw[0].__dict__ for raw in await _get_all_users(db)]
+    send_email.delay(value=f"{users}")
     return {
         "status": 200,
         "data": f"{len(users)} users sent",

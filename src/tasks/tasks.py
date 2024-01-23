@@ -1,9 +1,13 @@
+import os
 import smtplib
+import sys
 from email.message import EmailMessage
 from typing import List
 
 from celery import Celery
 
+sys.path.append(os.getcwd())
+sys.path.append(os.path.dirname(os.getcwd()))
 from src.api.schemas import ShowUser
 from src.settings import settings
 
@@ -19,8 +23,8 @@ def get_email_template_dashboard(value: List[ShowUser]) -> EmailMessage:
     return email
 
 
-@celery_app.task
-def send_email_report_dashboard(value: List[ShowUser]):
+@celery_app.task(name="send_email")
+def send_email(value: List[ShowUser]):
     email = get_email_template_dashboard(value)
     with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT) as server:
         server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)

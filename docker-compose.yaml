@@ -10,18 +10,17 @@ services:
       - "8000:8000"
     volumes:
       - ./src:/src
+    env_file:
+      - .env
     command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
   celery_2401:
     build: ./src
     container_name: celery_2401
-#    environment:
-#      SENTRY_URL: "https://e94f707391cbbc8c1e27d0c3391c0564@o4505918059118592.ingest.sentry.io/4506592294797312"
-#      APP_PORT: "8000"
-#    ports:
-#      - "8000:8000"
     volumes:
       - ./src:/src
+    env_file:
+      - .env
     command: celery -A tasks.tasks:celery_app worker --loglevel=INFO
 
   flower_2401:
@@ -32,21 +31,6 @@ services:
     volumes:
       - ./wait_flw.sh:/wait_flw.sh
     command: ['/wait_flw.sh']
-
-#  redis_2401:
-#    image: redis:7.2-rc2
-#    container_name: redis_2401
-#    restart: always
-#    ports:
-#      - "6379:6379"
-##    environment:
-##      REDIS_PASSWORD: ${REDIS_PASSWORD}
-##    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
-#    command: /bin/sh -c "redis-server"
-##    env_file:
-##      - .env
-#    volumes:
-#      - redis-data_2401:/data
 
   prometheus_2401:
     image: prom/prometheus:v2.43.0
