@@ -46,8 +46,8 @@ async def delete_all_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]
 @db_router.get("/report", response_model=dict[str, str])
 async def report_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]:
     """Sent report to GMAIL"""
-    users = [raw[0].__dict__ for raw in await _get_all_users(db)]
-    send_email_report_dashboard(value=users)
+    users = f"{[raw[0].__dict__ for raw in await _get_all_users(db)]}"
+    send_email_report_dashboard.delay(value=users)
     return {
         "status": 200,
         "data": f"{len(users)} users sent",
