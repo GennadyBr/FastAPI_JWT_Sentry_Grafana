@@ -62,5 +62,11 @@ class Settings(BaseSettings):
     # connect string for the TEST database
     TEST_DATABASE_URL = f"postgresql+asyncpg://{PG_USER_TEST}:{PG_PWS_TEST}@{PG_HOST_TEST}:{PG_PORT_TEST}/{PG_DB_TEST}"
 
+    # Jaeger
+    enable_tracer = True
+    JEAGER_HOST = os.environ.get("JEAGER_HOST", default="jaeger_2401")
+    JEAGER_PORT_UDP = os.environ.get("JEAGER_PORT_UDP", default=6831)
+    JEAGER_PORT_TCP = os.environ.get("JEAGER_PORT_TCP", default=16686)
+
 
 settings = Settings()
