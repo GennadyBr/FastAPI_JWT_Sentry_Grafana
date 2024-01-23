@@ -22,10 +22,3 @@ RUN apt-get -y update \
 COPY requirements.txt requirements.txt
 RUN python3 -m pip install --user --upgrade pip && \
     python3 -m pip install -r requirements.txt
-
-# copy app
-#COPY . .
-
-# Execute
-#CMD ["uvicorn", "main:app", "--reload", "--host 0.0.0.0", "--port 8000"]
-#CMD ["ls"]

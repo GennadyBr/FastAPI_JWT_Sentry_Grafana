@@ -40,27 +40,27 @@ class Settings(BaseSettings):
     # router DB - Generate fake users
     QTY_FAKE_USERS = 10
 
-    # REAL_DATABASE_URL = os.environ.get(
-    #     "REAL_DATABASE_URL",
-    #     default="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres",
-    # )  # connect string for the real database
+    # PostgreSQL
+    PG_USER = os.environ.get("PG_USER", default="postgres")
+    PG_PWS = os.environ.get("PG_PWS", default="postgres")
+    PG_HOST = os.environ.get("PG_HOST", default="db_pg_2401")  # localhost
+    PG_PORT = os.environ.get("PG_PORT", default=5432)
+    PG_DB = os.environ.get("PG_DB", default="postgres")
+    # connect string for the real database
+    REAL_DATABASE_URL = (
+        f"postgresql+asyncpg://{PG_USER}:{PG_PWS}@{PG_HOST}:{PG_PORT}/{PG_DB}"
+    )
 
-    REAL_DATABASE_URL = os.environ.get(
-        "REAL_DATABASE_URL",
-        default="postgresql+asyncpg://postgres:postgres@db_pg_2401:5432/postgres",
-    )  # connect string for the real database
-
-    # test envs
-    TEST_DATABASE_URL = os.environ.get(
-        "TEST_DATABASE_URL",
-        default="postgresql+asyncpg://postgres_test:postgres_test@localhost:5433/postgres_test",
-    )  # connect string for the test database
-
-    # # test envs docker
-    # TEST_DATABASE_URL = os.environ.get(
-    #     "TEST_DATABASE_URL",
-    #     default="postgresql+asyncpg://postgres_test:postgres_test@test_db_pg_2401:5432/postgres_test",
-    # )  # connect string for the test database
+    # PostgreSQL test
+    PG_USER_TEST = os.environ.get("PG_USER_TEST", default="postgres_test")
+    PG_PWS_TEST = os.environ.get("PG_PWS_TEST", default="postgres_test")
+    PG_HOST_TEST = os.environ.get(
+        "PG_HOST_TEST", default="localhost"
+    )  # test_db_pg_2401
+    PG_PORT_TEST = os.environ.get("PG_PORT_TEST", default=5433)
+    PG_DB_TEST = os.environ.get("PG_DB_TEST", default="postgres_test")
+    # connect string for the TEST database
+    TEST_DATABASE_URL = f"postgresql+asyncpg://{PG_USER_TEST}:{PG_PWS_TEST}@{PG_HOST_TEST}:{PG_PORT_TEST}/{PG_DB_TEST}"
 
 
 settings = Settings()

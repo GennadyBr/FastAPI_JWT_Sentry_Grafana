@@ -18,7 +18,6 @@ greenlet==2.0.2
 sentry-sdk[fastapi]
 starlette-exporter==0.15.1
 Faker==22.4.0
-# starlette~=0.22.0
 prometheus-fastapi-instrumentator==6.1.0
 fastapi-cache2[redis]==0.2.1
 celery==5.3.6

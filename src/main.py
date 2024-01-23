@@ -39,7 +39,7 @@ sentry_sdk.init(
 app = FastAPI(
     debug=True,
     docs_url="/docs",
-    title="FastAPI_auth_app4",
+    title="FastAPI_auth_2401",
 )
 # Prometheus metrics
 Instrumentator().instrument(app).expose(app)
