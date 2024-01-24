@@ -67,8 +67,8 @@ services:
     container_name: jaeger_2401
     restart: always
     ports:
-      - ${JEAGER_PORT_UDP}/udp}:6831
-      - ${JEAGER_PORT_TCP}/tcp}:16686
+      - ${JEAGER_PORT_UDP}:6831
+      - ${JEAGER_PORT_TCP}:16686
     depends_on:
       - app_2401
 
