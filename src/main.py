@@ -72,7 +72,7 @@ sentry_sdk.init(
 # create instance of the app
 app = FastAPI(
     debug=True,
-    docs_url="/api/docs",
+    docs_url="/fastapi/docs",
     title="FastAPI_auth_2401",
 )
 
