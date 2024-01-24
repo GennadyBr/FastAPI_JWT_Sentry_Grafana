@@ -5,7 +5,7 @@ services:
     container_name: app_2401
     restart: always
     ports:
-      - ${APP_PORT}:8000
+      - ${APP_PORT}:${APP_PORT}
     volumes:
       - ./src:/src
     env_file:
