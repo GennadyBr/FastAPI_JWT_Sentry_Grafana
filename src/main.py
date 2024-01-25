@@ -3,7 +3,6 @@ import sys
 
 sys.path.append(os.getcwd())
 sys.path.append(os.path.dirname(os.getcwd()))
-print(f"{sys.path}")
 
 import sentry_sdk
 import uvicorn
@@ -72,7 +71,9 @@ sentry_sdk.init(
 # create instance of the app
 app = FastAPI(
     debug=True,
+    version="0.0.1",
     docs_url="/fastapi/docs",
+    openapi_url="/fastapi/openapi.json",
     title="FastAPI_auth_2401",
 )
 
