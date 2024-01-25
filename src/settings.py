@@ -10,8 +10,9 @@ load_dotenv()
 class Settings(BaseSettings):
     """Settings for FastAPI application"""
 
-    # FastAPI port
+    # FastAPI
     APP_PORT = os.environ.get("APP_PORT", default=8000)
+    PREFIX = "/fastapi"
 
     # token
     SECRET_KEY: str = os.environ.get("SECRET_KEY", default="secret_key")

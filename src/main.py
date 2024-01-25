@@ -72,8 +72,8 @@ sentry_sdk.init(
 app = FastAPI(
     debug=True,
     version="0.0.1",
-    docs_url="/fastapi/docs",
-    openapi_url="/fastapi/openapi.json",
+    docs_url=f"{settings.PREFIX}/docs",
+    openapi_url=f"{settings.PREFIX}/openapi.json",
     title="FastAPI_auth_2401",
 )
 
@@ -91,11 +91,19 @@ Instrumentator().instrument(app).expose(app)
 main_api_router = APIRouter()
 
 # set routes to the app instance
-main_api_router.include_router(user_router, prefix="/user", tags=["user"])
-main_api_router.include_router(db_router, prefix="/db", tags=["db"])
-main_api_router.include_router(admin_router, prefix="/admin", tags=["admin"])
-main_api_router.include_router(login_router, prefix="/login", tags=["login"])
-main_api_router.include_router(service_router, tags=["service"])
+main_api_router.include_router(
+    user_router, prefix=f"{settings.PREFIX}/user", tags=["user"]
+)
+main_api_router.include_router(db_router, prefix=f"{settings.PREFIX}/db", tags=["db"])
+main_api_router.include_router(
+    admin_router, prefix=f"{settings.PREFIX}/admin", tags=["admin"]
+)
+main_api_router.include_router(
+    login_router, prefix=f"{settings.PREFIX}/login", tags=["login"]
+)
+main_api_router.include_router(
+    service_router, prefix=f"{settings.PREFIX}/service", tags=["service"]
+)
 app.include_router(main_api_router)
 
 
