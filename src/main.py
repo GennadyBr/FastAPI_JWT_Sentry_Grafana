@@ -8,11 +8,14 @@ import sentry_sdk
 import uvicorn
 from fastapi import FastAPI
 from fastapi.routing import APIRouter
-from prometheus_fastapi_instrumentator import Instrumentator
 from redis import asyncio as aioredis
 
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
+
+from prometheus_fastapi_instrumentator import Instrumentator
+from starlette_exporter import handle_metrics
+from starlette_exporter import PrometheusMiddleware
 
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
@@ -84,8 +87,8 @@ FastAPIInstrumentor.instrument_app(
 
 # Prometheus metrics
 Instrumentator().instrument(app).expose(app)
-# app.add_middleware(PrometheusMiddleware)
-# app.add_route("/metrics", handle_metrics)
+app.add_middleware(PrometheusMiddleware)
+app.add_route(f"{settings.PREFIX}/metrics", handle_metrics)
 
 # create the instance for the routes
 main_api_router = APIRouter()
