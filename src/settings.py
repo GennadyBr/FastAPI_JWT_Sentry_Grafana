@@ -12,7 +12,7 @@ class Settings(BaseSettings):
 
     # FastAPI
     APP_PORT = os.environ.get("APP_PORT", default=8000)
-    PREFIX = "/fastapi"
+    PREFIX = "/app_2401"
 
     # token
     SECRET_KEY: str = os.environ.get("SECRET_KEY", default="secret_key")
