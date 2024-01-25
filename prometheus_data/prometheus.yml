@@ -57,7 +57,7 @@ scrape_configs:
   honor_timestamps: true
   scrape_interval: 15s
   scrape_timeout: 10s
-  metrics_path: /metrics
+  metrics_path: /app_2401/metrics
   scheme: http
   follow_redirects: true
 #  enable_http2: true
@@ -66,6 +66,6 @@ scrape_configs:
     - localhost:9090
 - job_name: 'fastapi'
   scrape_interval: 10s
-  metrics_path: /metrics
+  metrics_path: /app_2401/metrics
   static_configs:
     - targets: ['app_2401:8001']
