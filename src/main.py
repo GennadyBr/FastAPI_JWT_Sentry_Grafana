@@ -80,10 +80,8 @@ app = FastAPI(
     title="FastAPI_auth_2401",
 )
 
-# jaeger
-FastAPIInstrumentor.instrument_app(
-    app
-)  # Jaeger instrument for tracer, must be after app = FastAPI
+# Jaeger instrument for tracer, must be after app = FastAPI
+FastAPIInstrumentor.instrument_app(app)
 
 # Prometheus metrics
 Instrumentator().instrument(app).expose(app)
