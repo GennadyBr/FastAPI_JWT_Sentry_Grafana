@@ -23,7 +23,7 @@ from src.service.user import _update_user
 from src.service.user import check_user_permissions
 from src.settings import settings
 
-logger = getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 user_router = APIRouter()
 
@@ -36,6 +36,7 @@ async def get_user_by_id(
     current_user: User = Depends(get_current_user_from_token),
 ) -> ShowUser:
     """Get user by id and return ShowUser object"""
+    LOGGER.info(f"def get_user_by_id({user_id=}, {current_user=}):")
     user = await _get_user_by_id(user_id, db)
     if user is None:
         raise HTTPException(
@@ -46,11 +47,12 @@ async def get_user_by_id(
 
 @user_router.post("/", response_model=ShowUser)
 async def create_user(body: UserCreate, db: AsyncSession = Depends(get_db)) -> ShowUser:
+    LOGGER.info(f"def create_user({body=}):")
     """Creates a new user with UserCreate body and return ShowUser object"""
     try:
         return await _create_new_user(body, db)
     except IntegrityError as err:
-        logger.error(err)
+        LOGGER.error(err)
         raise HTTPException(status_code=503, detail=f"Database error: {err}")
 
 
@@ -61,6 +63,7 @@ async def delete_user(
     current_user: User = Depends(get_current_user_from_token),
 ) -> DeleteUserResponse:
     """Deletes a user with user_id and return DeleteUserResponse object"""
+    LOGGER.info(f"def delete_user({user_id=}, {current_user=}):")
     user_for_deletion = await _get_user_by_id(user_id, db)
     if user_for_deletion is None:
         raise HTTPException(
@@ -87,6 +90,7 @@ async def update_user_by_id(
     current_user: User = Depends(get_current_user_from_token),
 ) -> UpdatedUserResponse:
     """Update user by user_id and UpdateUserRequest body and return UpdatedUserResponse object"""
+    LOGGER.info(f"def update_user_by_id({user_id=}, {body=}, {current_user=}):")
     updated_user_params = body.dict(exclude_none=True)
     if updated_user_params == {}:
         raise HTTPException(
@@ -108,6 +112,6 @@ async def update_user_by_id(
             updated_user_params=updated_user_params, session=db, user_id=user_id
         )
     except IntegrityError as err:
-        logger.error(err)
+        LOGGER.error(err)
         raise HTTPException(status_code=503, detail=f"Database error: {err}")
     return UpdatedUserResponse(updated_user_id=updated_user_id)

@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 
@@ -30,6 +31,10 @@ from api.v1.db_routers import db_router
 from api.v1.login_routers import login_router
 from api.v1.service_routers import service_router
 from api.v1.admin_routers import admin_router
+from logging_setup import LoggerSetup
+
+logger_setup = LoggerSetup()  # setup root logger
+LOGGER = logging.getLogger(__name__)
 
 
 # jaeger
@@ -111,10 +116,16 @@ app.include_router(main_api_router)
 @app.on_event("startup")
 async def startup_event():
     """Initialize the redis cache"""
+    LOGGER.info("--- Start up App ---")
     redis = aioredis.from_url(
         url=settings.REDIS_URL, encoding="utf-8", decode_responses=True
     )
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    LOGGER.info("--- Shutdown App ---")
 
 
 if __name__ == "__main__":
