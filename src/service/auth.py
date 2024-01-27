@@ -14,7 +14,7 @@ from src.db.session import get_db
 from src.hashing import Hasher
 from src.settings import settings
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.PREFIX}/login/token")
 
 
 async def _get_user_by_email_for_auth(

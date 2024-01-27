@@ -15,16 +15,15 @@ from src.service.db import _get_all_users
 from src.settings import settings
 from src.tasks.tasks import send_email
 
-logger = getLogger(__name__)
+LOGGER = getLogger(__name__)
 db_router = APIRouter()
-
-# CELERY_IMPORTS = ['comm.tasks']
 
 
 @db_router.get("/", response_model=List[ShowUser])
 @cache(expire=settings.REDIS_EXPIRE_SEC)
 async def get_all_users(db: AsyncSession = Depends(get_db)) -> List[ShowUser]:
     """Get ALL users"""
+    LOGGER.info("def get_all_users():")
     users = [raw[0] for raw in await _get_all_users(db)]
     if users is None:
         raise HTTPException(status_code=404, detail="Users not found.")
@@ -34,6 +33,7 @@ async def get_all_users(db: AsyncSession = Depends(get_db)) -> List[ShowUser]:
 @db_router.post("/", response_model=List[ShowUser])
 async def generate_fake_users(db: AsyncSession = Depends(get_db)) -> List[ShowUser]:
     """Generate fake users"""
+    LOGGER.info("def generate_fake_users():")
     res = await _generate_fake_users(settings.QTY_FAKE_USERS, db)
     return res
 
@@ -41,6 +41,7 @@ async def generate_fake_users(db: AsyncSession = Depends(get_db)) -> List[ShowUs
 @db_router.post("/delete_all", response_model=dict[str, str])
 async def delete_all_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]:
     """Delete ALL users"""
+    LOGGER.info("def delete_all_users():")
     res = await _delete_all_users(db)
     return {"message": f"{res} users deleted"}
 
@@ -48,6 +49,7 @@ async def delete_all_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]
 @db_router.get("/report", response_model=dict[str, str])
 async def report_users(db: AsyncSession = Depends(get_db)) -> dict[str, str]:
     """Sent report to GMAIL"""
+    LOGGER.info("def report_users():")
     users = [raw[0].__dict__ for raw in await _get_all_users(db)]
     send_email.delay(value=f"{users}")
     return {

@@ -1,11 +1,9 @@
-#ARG BASE_IMAGE=python:3.9-slim-buster
 FROM python:3.11-buster
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR ./src
-
 
 # system update & package install
 RUN apt-get -y update \
@@ -21,4 +19,4 @@ RUN apt-get -y update \
 # pip & requirements
 COPY requirements.txt requirements.txt
 RUN python3 -m pip install --user --upgrade pip && \
-    python3 -m pip install -r requirements.txt
+    python3 -m pip install --no-cache-dir -r requirements.txt
