@@ -1,4 +1,5 @@
 from datetime import timedelta
+from logging import getLogger
 
 from fastapi import APIRouter
 from fastapi import Depends
@@ -13,6 +14,7 @@ from src.service.auth import authenticate_user
 from src.service.security import create_access_token
 from src.settings import settings
 
+LOGGER = getLogger(__name__)
 login_router = APIRouter()
 
 
@@ -21,6 +23,7 @@ async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)
 ) -> dict:
     """Login for access token and return dict with token and bearer"""
+    LOGGER.info(f"def login_for_access_token({form_data=}):")
     # form_data.username is email, because we don't have username (name and surname)
     user = await authenticate_user(form_data.username, form_data.password, db)
     if not user:

@@ -1,17 +1,48 @@
 version: "3.0"
 services:
+  elastic_2401:
+    image: elasticsearch:8.10.2
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    container_name: elastic_2401
+    restart: always
+    ports:
+      - 9203:9203
+    environment:
+      - discovery.type=single-node
+
+  kibana_2401:
+    image: kibana:8.10.2
+#    image: docker.elastic.co/kibana/kibana:7.15.0
+    container_name: kibana_2401
+    restart: always
+    ports:
+      - 5603:5603
+
+  filebeat_2401:
+    build: ./filebeat
+    container_name: filebeat_2401
+    restart: always
+    volumes:
+      - ./fastapi-logs:/src/logs
+    depends_on:
+      - elastic_2401
+      - kibana_2401
+
   app_2401:
     build: ./src
     container_name: app_2401
     restart: always
-    expose:
-      - 8001
-#    ports:
-#      - ${APP_PORT}:${APP_PORT}
+#    expose:
+#      - 8001
+    ports:
+      - ${APP_PORT}:${APP_PORT}
     volumes:
       - ./src:/src
+      - ./fastapi-logs:/src/logs
     env_file:
       - .env
+    depends_on:
+      - elastic_2401
     command: uvicorn main:app --reload --host 0.0.0.0 --port ${APP_PORT}
 
   celery_2401:
