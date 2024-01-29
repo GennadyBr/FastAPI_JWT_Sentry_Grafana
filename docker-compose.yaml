@@ -5,6 +5,8 @@ services:
 #    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
     container_name: elastic_2401
     restart: always
+    expose:
+      - 9203
     ports:
       - 9203:9203
     environment:
